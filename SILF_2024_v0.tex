@@ -200,6 +200,7 @@
 	\vspace{0.25cm}
 	\textbf{Intrafalante} presente na fala de um mesmo locutor, devido as diferenças de como os movimentos da fala são articulados por ele;
 	\vspace{0.75cm}
+	
 	\textbf{Extrafalante}: observada entre falantes distintos devido a diferentes tratos vocais e habilidades motoras \cite{Kilbourn-Ceron2021}.
 	\begin{tikzpicture}[remember picture,overlay]
 		\node[xshift= 4.0cm,yshift=-2.5cm,opacity=1.0] at (current page.west) {\includegraphics[height=2cm]{PhP.png}};
@@ -219,45 +220,27 @@
 		\item Quais medidas acústicas são mais robustas para classificação de falantes em fala contínua? 
 	\end{enumerate}
 	\vspace{0.5cm}
-	\textbf{Hipótese:} GLM permite remover parte da informação do sinal acústico -- como o contexto fonológico --, e com isso acentuar as demais informações, como a identidade do locutor. \\
+	\textbf{Hipótese:} Um modelo linear generalizado pode remover informação do contexto fonológico e com isso acentuar a identidade do locutor. \\
 	\vspace{0.5cm}
-	\textbf{Restrição:} Os autores optaram por utilizar uma modelagem estatística baseada em variáveis pragmáticas (no espaço mensurável), buscando transparência do modelo.
+	\textbf{Restrição:} Modelagem estatística no espaço mensurável para ter mais controle e transparência em contraponto a RNA~\cite{McQuisten2009,Wuethrich2019}.
 \end{frame}
 % ==============================================================================
 \section{Materiais e métodos}
 \begin{frame}[fragile=singleslide]
-	\frametitle{Base de Dados}
+	\frametitle{Base de dados e aplicações}
 	\begin{itemize}[]
 		\item 18 locutores (8 F e 10 M) do corpus CEFALA 1 \cite{Neto2019};
-		\item 5615 unidades amostrais (vogais ou ditongos);
+		\item 5615 unidades distribuídas em 64 categorias, sendo 12 vogais e 52 ditongos;
 		\item entre 143 e 512 unidades por locutor;
-		\item rotulagem manual com revisão;
-		\item processamento em python  \textit{scipy}, \textit{scikit-learn}, \textit{pandas} e \textit{matplotlib};
+		\item rotulagem manual em TextGrid no \textit{praat} com revisão;
+		\item processamento em \textit{python 3.11} com pacotes \textit{scipy}, \textit{scikit-learn}, \textit{pandas} e \textit{matplotlib}.
 	\end{itemize}
 
 	\begin{tikzpicture}[remember picture,overlay]
-		\node[xshift=-4.0cm,yshift=-2.25cm,opacity=1.0] at (current page.east) {\includegraphics[height=2.5cm]{Praat-TextGrid-version-of-the-data-in-Figure-3-300x193.png}};
+		\node[xshift=0.0cm,yshift=-2.25cm,opacity=1.0] at (current page.center) {\includegraphics[height=3.5cm]{Praat-TextGrid.png}};
 	\end{tikzpicture}
-	\vfill
-	\lfr{Imagem: \url{https://traitsai.com/wp-content/uploads/2021/01/Praat-TextGrid-version-of-the-data-in-Figure-3-300x193.png}}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile=singleslide]
-	\frametitle{Variáveis de contexto}
-	\begin{table}[]
-		\small
-		\begin{tabular}{L{3.5cm}|L{11cm}}
-			\toprule
-			Variável             & Descrição \\ \midrule
-			Sexo do falante      & Feminino ou masculino.\\
-			Tonicidade da sílaba & Posição relativa da sílaba em relação a tônica, os valores variam entre tônica, pré-tônica ou pós-tônica. \\
-			Posição na palavra   & Sílaba da palavra, a partir do começo, a vogal se encontra. Os valores na amostra variam entre 0 e 6. \\
-			Ditongação           & Indica se a unidade amostral é uma vogal com valor 0 ou ditongo com valor 1. \\
-			Fechamento           & Sílaba onde se encontra a vogal (ou ditongo) é fechada por consoante.  \\
-			Som anterior         & Som fonológico que ocorre antes da vogal, valor nulo (final de palavra), vogal (e.g., /a/, /\textepsilon /, /ĩ/, ...) ou consoante (e.g., /p/, /\textteshlig/, /n/, ...). \\
-			Som posterior        & Som fonológico que ocorre depois da vogal, valor nulo (final de palavra), vogal (e.g., /a/, /\textepsilon /, /ĩ/, ...) ou consoante (e.g., /p/, /\textteshlig/, /n/, ...). \\ \bottomrule
-		\end{tabular}
-	\end{table}
+%	\vfill
+%	\lfr{Imagem: \url{Praat-TextGrid.png}}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile=singleslide]
@@ -284,8 +267,25 @@
 %		\node[xshift=-2.95cm,yshift=-1.0cm,opacity=1.0] at (current page.center) {\includegraphics[height=6.0cm]{Vowels_Count.png}};
 %		\node[xshift=5.05cm,yshift=-1.0cm,opacity=1.0] at (current page.center) {\includegraphics[height=6.0cm]{PLT_01_Sons_Contexto.png}};
 %	\end{tikzpicture}
+\end{frame}
 
-
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile=singleslide]
+	\frametitle{Variáveis de contexto}
+	\begin{table}[]
+		\small
+		\begin{tabular}{L{3.5cm}|L{11cm}}
+			\toprule
+			Variável             & Descrição \\ \midrule
+			Sexo do falante      & Feminino ou masculino.\\
+			Tonicidade da sílaba & Posição relativa da sílaba em relação a tônica, os valores variam entre tônica, pré-tônica ou pós-tônica. \\
+			Posição na palavra   & Sílaba da palavra, a partir do começo, a vogal se encontra. Os valores na amostra variam entre 0 e 6. \\
+			Ditongação           & Indica se a unidade amostral é uma vogal com valor 0 ou ditongo com valor 1. \\
+			Fechamento           & Sílaba onde se encontra a vogal (ou ditongo) é fechada por consoante.  \\
+			Som anterior         & Som fonológico que ocorre antes da vogal, valor nulo (final de palavra), vogal (e.g., /a/, /\textepsilon /, /ĩ/, ...) ou consoante (e.g., /p/, /\textteshlig/, /n/, ...). \\
+			Som posterior        & Som fonológico que ocorre depois da vogal, valor nulo (final de palavra), vogal (e.g., /a/, /\textepsilon /, /ĩ/, ...) ou consoante (e.g., /p/, /\textteshlig/, /n/, ...). \\ \bottomrule
+		\end{tabular}
+	\end{table}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile=singleslide]
@@ -296,7 +296,7 @@
 		\begin{tabular}{L{4cm}|L{4cm}|L{3.5cm}|L{3cm}}
 			\toprule
 			Tipo de medida acústica & Tendência central   & Variabilidade    & Categoria    \\ \midrule
-			1 – Intensidade e duração     & Intensidade, Duração   & ---   & Não classificada \\
+			1 – Intensidade e duração     & Intensidade, Duração   & --   & Não classificada \\
 			\begin{tabular}[c]{@{}l@{}}2 - Frequência dos\\ formantes\end{tabular} & \begin{tabular}[c]{@{}l@{}}média $F_1$, média $F_2$,\\ média $F_3$, média $F_4$ e\\ média $F_D$\end{tabular} & \begin{tabular}[c]{@{}l@{}}Cov $F_1$, Cov $F_2$,\\ Cov $F_3$, Cov $F_4$ e\\ Cov $F_D$\end{tabular} & Articulatória    \\
 			3 - Frequência fundamental    & média $F_0$  & Cov  $F_0$   & Vocal  \\
 			4 - Forma espectral da fonte harmônica   & média H1*–H2*, média H2*–H4*, média  H4*–H2kHz* e média H2kHz*–H5kHz  & Cov H1*–H2*, Cov H2*–H4*, Cov H4*–H2kHz* e Cov H2kHz*–H5kHz & Vocal  \\
@@ -341,7 +341,7 @@
 \subsection{Descrição Procedimental}
 \begin{frame}[fragile=singleslide]
 	\frametitle{Equacionamento}
-	\textbf{modelos lineares generalizados} (GLM - \textit{generalized linear model})
+	\textbf{Modelos linear generalizado} (GLM - \textit{generalized linear model})
 	
 	\begin{equation}
 		 Y_{n} \approx X_{C|n} + X_{L|n} + \epsilon_{n}
@@ -360,7 +360,10 @@
 
 \begin{frame}[fragile=singleslide]
 	\frametitle{Criação de variáveis fictícias}
-
+	Número de Categorias dos sons anteriores e posteriores\\
+	
+	Homogeneizar a ocorrência em todos os locutores\\
+	
 	\begin{enumerate}
 		\item Obstrução: valor 1 para vogais e 0 para consoantes.
 		\item Vozeamento: em todas vogais e nas consoantes vozeadas é 1 e 0 nos sons não
@@ -368,18 +371,27 @@
 		\item Abertura da boca: Valor 0 para as vogais altas e para as consoantes plosivas e 1 caso contrário.
 		\item Posição dos articuladores: Apresenta valor 1 para as consoantes articuladas na posição frontal da boca (i.e., lábios, dentes ou alvéolo) e para as vogais frontais.
 		\item Nasalidade: apresenta valor 1 para as vogais e consoantes nasais.
-		\item Em caso de ausência de som anterior ou precedente todas as variáveis fictícias assumem valor igual a 0.
 	\end{enumerate}
+	Em caso de ausência de som anterior ou precedente todas as variáveis fictícias assumem valor igual a 0.
 \end{frame}
 
 \begin{frame}[fragile=singleslide]
 	\frametitle{Ajuste do modelo}
-	\begin{figure}
-		\centering
-		\includegraphics[height=7cm]{pValue_ANOVA_features.png}
-		%		\caption{Autovalores normalizados da matriz de correlação.}
-	\end{figure}
-
+	\begin{columns}
+		\begin{column}{0.25\textwidth}
+			Conjunto de treinamento (70\%) e de teste (30\%).\\
+			\vspace{0.5cm}
+			Homogenização de 20 vetores por locutor (14/6) por \textit{bootstrap}.
+		\end{column}
+		\begin{column}{0.75\textwidth}  %%<--- here	
+				\vspace{-1.5cm}
+				\begin{figure}
+				\centering
+				\includegraphics[height=7cm]{pValue_ANOVA_features.png}
+				%		\caption{Autovalores normalizados da matriz de correlação.}
+			\end{figure}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \begin{frame}[fragile=singleslide]
@@ -387,6 +399,8 @@
 	
 	\begin{columns}
 		\begin{column}{0.4\textwidth}
+			Pseudo $R^2$ vocais vs. articulatórias\\
+			\vspace{0.5cm}
 			\textbf{Kolmogorov-Smirnov} falha em rejeitar que as distribuições são diferentes (valor-p de 0,31). \\
 			\vspace{0.5cm}
 			\textbf{Levene} falha em indicar a diferença de variância (valor-p de 0,59). \\
@@ -394,7 +408,7 @@
 			O \textbf{teste t} de diferença entre as médias falha (valor-p de 0,87).\\
 		\end{column}
 		\begin{column}{0.6\textwidth}  %%<--- here	
-				\vspace{-1cm}
+			\vspace{-1cm}
 			\begin{figure}
 				\centering
 				\includegraphics[height=7cm]{MDS_01.jpg}
@@ -409,11 +423,17 @@
 	\frametitle{Razão de dispersão}
 	
 	\begin{columns}
-		\begin{column}{0.3\textwidth}
+		\begin{column}{0.45\textwidth}			
+			\textbf{Intralocutor}: $D_w$ distâncias de cada conjunto de vetores ao centroide.\\
+			\vspace{0.5cm}
 			
-			\textbf{Intralocutor}: distâncias 
+			\textbf{Interlocutor}: $D_b$ distância do centro da amostra a cada centroide de locutor normalizada pela distância do centroide mais distante$^*$.\\
+			
+%			\vspace{0.5cm}
+			\[RD = \frac{D_w}{D_b} \]
 		\end{column}
-		\begin{column}{0.7\textwidth}  %%<--- here	
+		\begin{column}{0.54\textwidth}  %%<--- here	
+				\vspace{-1.0cm}
 				\begin{figure}
 				\centering
 				\includegraphics[height=5.9cm]{Dispersao.png}
@@ -422,8 +442,8 @@
 		\end{column}
 		
 	\end{columns}
-
-
+	\vfill
+	* a normalização foi para fazer o ajuste da dimesionalidade.
 	
 \end{frame}
 
@@ -454,6 +474,51 @@
 
 \end{frame}
 
+\begin{frame}[fragile=singleslide]
+	\frametitle{Regressão logística}
+	\begin{columns}
+		\begin{column}{0.25\textwidth}
+			\[LR = \frac{P(ML)}{P(LD)} \]
+			\[LLR = \log_2 \left(\frac{P(ML)}{P(LD)} \right)\]
+		\end{column}
+		\begin{column}{0.75\textwidth}  %%<--- here	
+			\vspace{-1.0cm}
+			\begin{figure}
+				\centering
+				\includegraphics[height=6cm]{SMF_Logistic.png}
+			\end{figure}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+	\frametitle{Desempenho de ECE}
+	\begin{columns}
+		\begin{column}{0.45\textwidth}
+			\textbf{Pontilhada cinza}: Classificador aleatório (LR = 1).\\
+			\vspace{0.5cm}
+			Quanto mais ``baixa'' menor o custo do erro na classificação.
+			\begin{equation} \label{Hip_Hipotese_Anuncio}
+				\begin{cases}
+					H_0: & \text{Amostras locutores diferentes,}\\ \nonumber
+					H_1: & \text{amostras do mesmo locutor.} 
+				\end{cases}
+			\end{equation}
+		\end{column}
+		\begin{column}{0.55\textwidth}  %%<--- here	
+			\vspace{-1.0cm}
+			\begin{figure}
+				\centering
+				\includegraphics[height=6cm]{ECE_01.jpg}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	\vfill
+	\[ 
+	C_{LLR} = \frac{1}{2} \left( \frac{1}{N_{ML}} \sum \log_{2} \left(1+ \frac{1}{LR_{MO}} \right) + \frac{1}{N_{LD}} \sum \log_{2} \left(1 + LR_{LD} \right) \right).
+	\]
+\end{frame}
 
 
 \begin{frame}[fragile=singleslide]
@@ -469,7 +534,7 @@
 		\begin{tabular}{@{}l|cc|ccc@{}}
 			\toprule
 			\multirow{2}{*}{Espaço da medida acústica} & \multicolumn{2}{c|}{Treinamento} & \multicolumn{3}{c}{Teste (intervalo de confiança)}                            \\ \cmidrule(l){2-6}
-			& EER (\%)       & $C_{LLR}$ (np)       & Acurácia (\%)             & TFP (\%)                & TFN (\%)                \\ \midrule
+			& EER (\%)       & $C_{LLR}$ (bits)       & Acurácia (\%)             & TFP (\%)                & TFN (\%)                \\ \midrule
 			VA                                         & 8,9            & 0,271           & 89,8 (88,9; 90,6)         & 10,2 (9,3; 11,1)        & 10,0 (6,8; 13,2)        \\
 			PCA                                        & 4,8            & 0,175           & 93,2 (92,7;93,8)          & 6,8 (6,2; 7,4)          & \textbf{5,8 (3,4; 8,3)} \\
 			GLM-RES                                    & \textbf{0,1}   & \textbf{0,007}  & \textbf{99,1 (98,9;99,3)} & \textbf{0,6 (0,4; 0,8)} & 11,7 (9,6; 13,7)        \\
@@ -490,15 +555,7 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}[fragile=singleslide]
-	\frametitle{Desempenho de ECE}
-		\begin{figure}
-		\centering
-		\includegraphics[height=6cm]{ECE_01.jpg}
-		\caption{Percentual de ocorrência das unidades amostrais.}
-	\end{figure}
 
-\end{frame}
 
 % ==============================================================================
 \section{Discussão}
@@ -507,14 +564,14 @@
 	\textbf{Resultados}:
 	\begin{itemize}
 		\item O modelo GLM apresentou um pseudo R2 de 0,124.
-		\item redução da razão de dispersão: 63\% variáveis mensuráveis e de 46\% PCA. 
-		\item Comparação de locutores com desempenho próximo ao estado da arte \cite{Sztaho2023,Ishihara2021}
-		\item pior falso positivo em 11,7\% (101\% acima do melhor resultado), aumenta o \textit{in dubio pro reu}.
+		\item Redução da razão de dispersão: 63\% variáveis mensuráveis e de 46\% PCA. 
+		\item Comparação de locutores com desempenho próximo ao estado da arte \cite{Sztaho2023,Ishihara2021}.
+		\item Pior falso positivo em 11,7\% (101\% acima do melhor resultado), aumenta o \textit{in dubio pro reu}.
 	\end{itemize}
 	
 	\textbf{Ainda pode-se avaliar}:
 	\begin{itemize}
-		\item Influencia de cada variável de contexto;
+		\item Influência de cada variável de contexto;
 		\item Influência das variáveis fictícias;
 	\end{itemize}
 \end{frame}
@@ -535,8 +592,8 @@
 	\begin{itemize}
 		\item etiquetamento automatizado;
 		\item expansão de dialetos;
-		\item expandir contexto com cadência, prosódia, avaliação de emoção. etc...;
-		\item expandir lista de medidas acústicas (e.g \textit{cepstrun}).
+		\item expandir contexto com cadência, prosódia, avaliação de emoção, etc...;
+		\item expandir lista de medidas acústicas (e.g. \textit{cepstrun}).
 	\end{itemize}
 	
 \end{frame}
